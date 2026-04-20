@@ -36,3 +36,6 @@ mono_crash.*
 # OS files
 .DS_Store
 Thumbs.db
+
+Assets/Samples/
+Assets/UnityXRContent/ARFoundation/SimulationEnvironments/
