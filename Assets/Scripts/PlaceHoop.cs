@@ -17,7 +17,7 @@ public class PlaceHoop : MonoBehaviour
     {
         raycastManager = GetComponent<ARRaycastManager>();
 
-        // Disable throwing at start
+        // 🔴 Disable throwing until hoop is placed
         throwScript.enabled = false;
     }
 
@@ -31,13 +31,24 @@ public class PlaceHoop : MonoBehaviour
             {
                 Pose pose = hits[0].pose;
 
-                Instantiate(hoopPrefab, pose.position, pose.rotation);
+                // 🟢 Instantiate hoop
+                GameObject spawnedHoop = Instantiate(hoopPrefab, pose.position, Quaternion.identity);
 
+                // 🎯 Make hoop face camera (player)
+                Vector3 direction = Camera.main.transform.position - spawnedHoop.transform.position;
+                direction.y = 0; // keep upright
+                spawnedHoop.transform.rotation = Quaternion.LookRotation(direction);
+
+                // 🎯 Assign hoop target for throwing
+                throwScript.hoopTarget = spawnedHoop.transform;
+
+                // 🟢 Mark placed
                 isPlaced = true;
 
-                // Enable throwing AFTER placement
+                // 🟢 Enable throwing
                 throwScript.enabled = true;
 
+                // ❌ Disable this script (no more placement)
                 enabled = false;
             }
         }

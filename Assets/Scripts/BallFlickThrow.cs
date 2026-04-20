@@ -4,6 +4,7 @@ public class BallFlickThrow : MonoBehaviour
 {
     public GameObject ballPrefab;
     public GameManager gameManager;
+    public Transform hoopTarget;
 
     private Vector2 startTouch;
     private Vector2 endTouch;
