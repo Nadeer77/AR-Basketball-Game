@@ -60,26 +60,32 @@ public class BallFlickThrow : MonoBehaviour
 
     void ThrowBall()
     {
-        if (currentBall == null) return;
+        if (currentBall == null || hoopTarget == null) return;
 
         Vector2 swipe = endTouch - startTouch;
+
+        float swipePower = Mathf.Clamp(swipe.magnitude / 300f, 0.5f, 2f);
+
+        // 🎯 Target position (slightly above rim for arc)
+        Vector3 targetPos = hoopTarget.position + Vector3.up * 0.3f;
+
+        // 🎯 Direction toward hoop
+        Vector3 direction = (targetPos - currentBall.transform.position).normalized;
+
+        // 🏀 Add arc (VERY IMPORTANT)
+        direction += Vector3.up * 0.5f;
 
         // Enable physics
         currentRB.isKinematic = false;
         currentRB.useGravity = true;
 
-        Vector3 direction =
-            transform.forward * 8f +
-            Vector3.up * 5f +
-            transform.right * (swipe.x * 0.02f);
-
-        currentRB.AddForce(direction, ForceMode.Impulse);
-        currentRB.AddTorque(Random.insideUnitSphere * 5f);
+        // 🚀 Apply force
+        currentRB.AddForce(direction * swipePower * 8f, ForceMode.Impulse);
+        currentRB.AddTorque(Random.insideUnitSphere * 3f);
 
         canThrow = false;
 
         currentBall.tag = "Ball";
-
         currentBall.AddComponent<BallLife>().Init(this, gameManager);
 
         currentBall = null;
