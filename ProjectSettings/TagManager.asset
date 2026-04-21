@@ -7,6 +7,7 @@ TagManager:
   - Ball
   - Ground
   - Score
+  - Hoop
   layers:
   - Default
   - TransparentFX

@@ -241,7 +241,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -82.62035, w: 0}
+  m_margin: {x: 0, y: 0, z: -112.446434, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -524,13 +524,13 @@ AudioSource:
   m_GameObject: {fileID: 321703429}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 3295396850514477411, guid: e5e16d93e2f20a9219ba057263d09995, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1300,6 +1300,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03f18e2922370a87aa218868ad0e7e16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mixer: {fileID: 24100000, guid: e5e16d93e2f20a9219ba057263d09995, type: 2}
+  musicSource: {fileID: 321703431}
+  sfxSource: {fileID: 1157497864}
+  bgMusic: {fileID: 8300000, guid: 65c6a32e85ec0dde99dc026df8d43062, type: 3}
+  hitGroundSFX: {fileID: 8300000, guid: 3dfe4aa3e79aad5fa9b9c1ce9608da2a, type: 3}
+  scoreSFX: {fileID: 8300000, guid: 99917f329ec69e21aa1e295ebfa99830, type: 3}
 --- !u!4 &589803825
 Transform:
   m_ObjectHideFlags: 0
@@ -1782,7 +1788,7 @@ AudioSource:
   m_GameObject: {fileID: 1157497862}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4120181062258061384, guid: e5e16d93e2f20a9219ba057263d09995, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1

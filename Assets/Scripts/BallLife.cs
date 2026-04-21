@@ -44,6 +44,7 @@ public class BallLife : MonoBehaviour
         {
             EndFail();
         }
+        
     }
 
     void EndSuccess()
@@ -67,6 +68,7 @@ public class BallLife : MonoBehaviour
             Instantiate(scoreEffectPrefab, rightPos, Quaternion.LookRotation(right));
         }
 
+        AudioManager.Instance.PlayScore();
         GameManager.Instance.AddScore();
 
         BallPool.Instance.ReturnBall(gameObject);
@@ -75,6 +77,7 @@ public class BallLife : MonoBehaviour
 
     void EndFail()
     {
+        AudioManager.Instance.PlayHit();
         BallPool.Instance.ReturnBall(gameObject);
         throwManager.AllowNextBall();
 
