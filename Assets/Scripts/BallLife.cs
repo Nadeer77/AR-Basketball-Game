@@ -48,28 +48,34 @@ public class BallLife : MonoBehaviour
 
     void EndSuccess()
     {
-        // 🎉 Spawn effect in front of camera
-        if (scoreEffectPrefab != null)
+        if (scoreEffectPrefab != null && throwManager.hoopTarget != null)
         {
-            Transform cam = Camera.main.transform;
+            Transform hoop = throwManager.hoopTarget;
 
-            Vector3 spawnPos =
-                cam.position +
-                cam.forward * 1.0f +
-                Vector3.up * 0.2f;
+            // 👉 center of hoop
+            Vector3 center = hoop.position + Vector3.up * 2f;;
 
-            Instantiate(scoreEffectPrefab, spawnPos, Quaternion.identity);
+            // 👉 left & right direction
+            Vector3 right = hoop.right;
+
+            // 👉 positions
+            Vector3 leftPos = center - right * 0.5f;
+            Vector3 rightPos = center + right * 0.5f;
+
+            // 💥 spawn effects
+            Instantiate(scoreEffectPrefab, leftPos, Quaternion.LookRotation(-right));
+            Instantiate(scoreEffectPrefab, rightPos, Quaternion.LookRotation(right));
         }
 
         GameManager.Instance.AddScore();
 
-        gameObject.SetActive(false);
+        BallPool.Instance.ReturnBall(gameObject);
         throwManager.AllowNextBall();
     }
 
     void EndFail()
     {
-        gameObject.SetActive(false);
+        BallPool.Instance.ReturnBall(gameObject);
         throwManager.AllowNextBall();
 
         GameManager.Instance.LoseLife();

@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
         GameObject[] balls = GameObject.FindGameObjectsWithTag("Ball");
         foreach (GameObject b in balls)
         {
-            Destroy(b);
+            BallPool.Instance.ReturnBall(b); 
         }
     }
 

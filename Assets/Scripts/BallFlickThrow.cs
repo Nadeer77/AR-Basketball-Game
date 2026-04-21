@@ -50,9 +50,18 @@ public class BallFlickThrow : MonoBehaviour
             transform.forward * 0.8f +
             Vector3.up * 0.3f;
 
-        currentBall = Instantiate(ballPrefab, spawnPos, Quaternion.identity);
+        // 🎯 GET FROM POOL
+        currentBall = BallPool.Instance.GetBall();
+
+        // 🎯 POSITION IT
+        currentBall.transform.position = spawnPos;
+        currentBall.transform.rotation = Quaternion.identity;
 
         currentRB = currentBall.GetComponent<Rigidbody>();
+
+        // 🔥 RESET PHYSICS (VERY IMPORTANT)
+        currentRB.linearVelocity = Vector3.zero;
+        currentRB.angularVelocity = Vector3.zero;
 
         currentRB.useGravity = false;
         currentRB.isKinematic = true;
@@ -86,7 +95,7 @@ public class BallFlickThrow : MonoBehaviour
         canThrow = false;
 
         currentBall.tag = "Ball";
-        BallLife bl = currentBall.AddComponent<BallLife>();
+        BallLife bl = currentBall.GetComponent<BallLife>();
         bl.scoreEffectPrefab = scoreEffectPrefab;
         bl.Init(this, gameManager);
 
