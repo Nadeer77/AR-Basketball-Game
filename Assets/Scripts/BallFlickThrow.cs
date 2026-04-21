@@ -5,6 +5,7 @@ public class BallFlickThrow : MonoBehaviour
     public GameObject ballPrefab;
     public GameManager gameManager;
     public Transform hoopTarget;
+    public GameObject scoreEffectPrefab;
 
     private Vector2 startTouch;
     private Vector2 endTouch;
@@ -19,7 +20,7 @@ public class BallFlickThrow : MonoBehaviour
     {
         if (!canThrow) return;
 
-        // TAP → spawn ball
+        // start swipe
         if (Input.GetMouseButtonDown(0))
         {
             startTouch = Input.mousePosition;
@@ -53,7 +54,6 @@ public class BallFlickThrow : MonoBehaviour
 
         currentRB = currentBall.GetComponent<Rigidbody>();
 
-        // Disable physics initially
         currentRB.useGravity = false;
         currentRB.isKinematic = true;
     }
@@ -73,7 +73,7 @@ public class BallFlickThrow : MonoBehaviour
         Vector3 direction = (targetPos - currentBall.transform.position).normalized;
 
         // 🏀 Add arc (VERY IMPORTANT)
-        direction += Vector3.up * 0.5f;
+        direction += Vector3.up * 0.7f;
 
         // Enable physics
         currentRB.isKinematic = false;
@@ -86,7 +86,10 @@ public class BallFlickThrow : MonoBehaviour
         canThrow = false;
 
         currentBall.tag = "Ball";
-        currentBall.AddComponent<BallLife>().Init(this, gameManager);
+        BallLife bl = currentBall.AddComponent<BallLife>();
+        bl.scoreEffectPrefab = scoreEffectPrefab;
+        bl.Init(this, gameManager);
+
 
         currentBall = null;
         currentRB = null;

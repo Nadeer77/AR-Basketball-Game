@@ -3,11 +3,13 @@ using UnityEngine;
 public class BallLife : MonoBehaviour
 {
     private BallFlickThrow throwManager;
-
     private bool canCheckCollision = false;
+
+    public GameObject scoreEffectPrefab;
+
     void Update()
     {
-        // 💥 Safety check: if ball falls too much
+        // safety check (if ball falls too far)
         if (transform.position.y < -2f)
         {
             EndFail();
@@ -30,7 +32,6 @@ public class BallLife : MonoBehaviour
     {
         if (other.CompareTag("Score"))
         {
-            GameManager.Instance.AddScore(); // ✅ FIXED
             EndSuccess();
         }
     }
@@ -47,6 +48,21 @@ public class BallLife : MonoBehaviour
 
     void EndSuccess()
     {
+        // 🎉 Spawn effect in front of camera
+        if (scoreEffectPrefab != null)
+        {
+            Transform cam = Camera.main.transform;
+
+            Vector3 spawnPos =
+                cam.position +
+                cam.forward * 1.0f +
+                Vector3.up * 0.2f;
+
+            Instantiate(scoreEffectPrefab, spawnPos, Quaternion.identity);
+        }
+
+        GameManager.Instance.AddScore();
+
         gameObject.SetActive(false);
         throwManager.AllowNextBall();
     }
@@ -55,6 +71,7 @@ public class BallLife : MonoBehaviour
     {
         gameObject.SetActive(false);
         throwManager.AllowNextBall();
-        GameManager.Instance.GameOver(); // ✅ FIXED
+
+        GameManager.Instance.LoseLife();
     }
 }
